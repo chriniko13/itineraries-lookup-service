@@ -38,15 +38,26 @@ TODO
 
 
 #### Execute Unit Tests
-TODO
+* Execute: `mvn clean test`
 
 
 #### Execute Integration Tests (you should run docker-compose up first)
-TODO
+* Execute: `mvn clean integration-test -DskipUTs=true` or `mvn clean verify -DskipUTs=true`
 
 
 #### Test Coverage (via JaCoCo)
-TODO
+* In order to generate reports execute: `mvn clean verify`
+    * In order to see unit test coverage open with browser: `target/site/jacoco-ut/index.html`
+    * In order to see integration test coverage open with browser: `target/site/jacoco-it/index.html`
+
+
+#### Swagger (Documentation)
+* First run the service.
+
+* Then:
+    * For UI visit: `http://localhost:8181/swagger-ui.html`
+
+    * For plain JSON visit: `http://localhost:8181/v2/api-docs`
 
 
 #### Example Request
