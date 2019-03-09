@@ -26,15 +26,22 @@
 
 
 #### Prequisities in order to local run
-1) Docker Compose
-
+* Need to have up and running the [routes-service](https://github.com/chriniko13/routes-service)
 
 #### How to run service (not dockerized)
-TODO
+* Two options:
+    * Execute: 
+        * `mvn clean install -DskipTests=true`
+        * `java -jar -Dspring.profiles.active=dev -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector target/itineraries-lookup-service-1.0.0-SNAPSHOT.jar`
+                
+    * Execute:
+        * `mvn spring-boot:run -Dspring.profiles.active=dev -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector`
 
 
 #### How to run service (dockerized)
-TODO
+* Execute: `docker build -t itineraries-lookup-service .` in order to build docker image.
+
+* Execute: `docker run -p 8181:8181 itineraries-lookup-service:latest` in order to run the container.
 
 
 #### Execute Unit Tests
