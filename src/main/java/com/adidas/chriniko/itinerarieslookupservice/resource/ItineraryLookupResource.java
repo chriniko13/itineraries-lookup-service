@@ -1,7 +1,7 @@
 package com.adidas.chriniko.itinerarieslookupservice.resource;
 
-import com.adidas.chriniko.itinerarieslookupservice.dto.ItinerarySearchInfo;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryInfoResult;
+import com.adidas.chriniko.itinerarieslookupservice.dto.ItinerarySearchInfo;
 import com.adidas.chriniko.itinerarieslookupservice.service.ItineraryLookupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,9 +58,7 @@ public class ItineraryLookupResource {
                                          @RequestParam(name = "allItinerariesInfoDetailed", required = false, defaultValue = "false") boolean allItinerariesInfoDetailed) {
         log.debug("  >> find: {} --- allItinerariesInfo: {}", input, allItinerariesInfo);
 
-        //TODO use allItinerariesInfoDetailed....
-
-        ItineraryInfoResult result = itineraryLookupService.process(input, allItinerariesInfo);
+        ItineraryInfoResult result = itineraryLookupService.process(input, allItinerariesInfo, allItinerariesInfoDetailed);
         return ResponseEntity.ok(result);
     }
 

@@ -54,7 +54,9 @@ public class ItineraryLookupService {
         this.routeInfoToItineraryRouteInfo = routeInfoToItineraryRouteInfo;
     }
 
-    public ItineraryInfoResult process(ItinerarySearchInfo itinerarySearchInfo, boolean allItinerariesInfo) {
+    public ItineraryInfoResult process(ItinerarySearchInfo itinerarySearchInfo,
+                                       boolean allItinerariesInfo,
+                                       boolean allItinerariesInfoDetailed) {
 
         final ItineraryInfoResult itineraryInfoResult = new ItineraryInfoResult();
 
@@ -70,7 +72,7 @@ public class ItineraryLookupService {
 
         calculateItineraries(itineraries);
 
-        generateResponse(itineraryInfoResult, itineraries, allItinerariesInfo);
+        generateResponse(itineraryInfoResult, itineraries, allItinerariesInfo, allItinerariesInfoDetailed);
 
         return itineraryInfoResult;
     }
@@ -151,10 +153,11 @@ public class ItineraryLookupService {
 
     private void generateResponse(ItineraryInfoResult itineraryInfoResult,
                                   List<Itinerary> itineraries,
-                                  boolean allItinerariesInfo) {
+                                  boolean allItinerariesInfo,
+                                  boolean allItinerariesInfoDetailed) {
 
         if (allItinerariesInfo) {
-            List<ItineraryDisplayInfo> allItineraryDisplayInfos = itinerariesToItineraryDisplayInfos.transform(itineraries);
+            List<ItineraryDisplayInfo> allItineraryDisplayInfos = itinerariesToItineraryDisplayInfos.transform(itineraries, allItinerariesInfoDetailed);
             itineraryInfoResult.setAllItinerariesInfo(allItineraryDisplayInfos);
         }
 

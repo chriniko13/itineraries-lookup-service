@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 public class ItinerariesToItineraryDisplayInfos {
 
     public List<ItineraryDisplayInfo> transform(List<Itinerary> itineraries) {
+        return transform(itineraries, true);
+    }
+
+    public List<ItineraryDisplayInfo> transform(List<Itinerary> itineraries, boolean detailedRouteInfo) {
         return itineraries
                 .stream()
                 .map(itinerary -> {
@@ -26,7 +30,9 @@ public class ItinerariesToItineraryDisplayInfos {
 
                     itineraryDisplayInfo.setNoOfVisitedCities(itineraryDisplayInfo.getNoOfConnections() + 1);
 
-                    itineraryDisplayInfo.setDetailedRouteInfo(routesInfos);
+                    if (detailedRouteInfo) {
+                        itineraryDisplayInfo.setDetailedRouteInfo(routesInfos);
+                    }
 
                     return itineraryDisplayInfo;
                 })
