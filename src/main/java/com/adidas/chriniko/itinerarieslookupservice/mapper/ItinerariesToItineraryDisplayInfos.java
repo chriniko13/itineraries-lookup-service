@@ -1,6 +1,7 @@
 package com.adidas.chriniko.itinerarieslookupservice.mapper;
 
 import com.adidas.chriniko.itinerarieslookupservice.domain.Itinerary;
+import com.adidas.chriniko.itinerarieslookupservice.domain.ItineraryRouteInfo;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryDisplayInfo;
 import org.springframework.stereotype.Component;
 
@@ -8,33 +9,48 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-public class ItinerariesToItineraryDisplayInfos implements Mapper<Itinerary, ItineraryDisplayInfo> {
+public class ItinerariesToItineraryDisplayInfos {
 
-    @Override
     public List<ItineraryDisplayInfo> transform(List<Itinerary> itineraries) {
         return itineraries
                 .stream()
                 .map(itinerary -> {
                     ItineraryDisplayInfo itineraryDisplayInfo = new ItineraryDisplayInfo();
 
-                    itineraryDisplayInfo.setNoOfConnections(itinerary.getRoutesInfos().size());
+                    List<ItineraryRouteInfo> routesInfos = itinerary.getRoutesInfos();
 
-                    String fastDisplay = itinerary
-                            .getRoutesInfos()
-                            .stream()
-                            .map(routeInfo -> routeInfo.getCity().getName())
-                            .collect(Collectors.joining(" --> ", "[", "]"));
-
+                    String fastDisplay = calculateFastDisplay(routesInfos);
                     itineraryDisplayInfo.setFastDisplay(fastDisplay);
+
+                    itineraryDisplayInfo.setNoOfConnections(routesInfos.size());
+
+                    itineraryDisplayInfo.setNoOfVisitedCities(itineraryDisplayInfo.getNoOfConnections() + 1);
+
+                    itineraryDisplayInfo.setDetailedRouteInfo(routesInfos);
 
                     return itineraryDisplayInfo;
                 })
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public ItineraryDisplayInfo transform(Itinerary input) {
-        throw new UnsupportedOperationException("not needed at the moment");
+    private String calculateFastDisplay(List<ItineraryRouteInfo> routesInfos) {
+
+        final StringBuilder fastDisplay = new StringBuilder("[");
+
+        for (int i = 0; i < routesInfos.size(); i++) {
+
+            ItineraryRouteInfo itineraryRouteInfo = routesInfos.get(i);
+
+            String originCityName = itineraryRouteInfo.getCity().getName();
+            fastDisplay.append(originCityName).append(" ---> ");
+
+            if (i == routesInfos.size() - 1) {
+                String destinyCityName = itineraryRouteInfo.getDestinyCity().getName();
+                fastDisplay.append(destinyCityName).append("]");
+            }
+        }
+
+        return fastDisplay.toString();
     }
 
 

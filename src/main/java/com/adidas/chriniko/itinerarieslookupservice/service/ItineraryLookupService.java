@@ -10,7 +10,8 @@ import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryDisplayInfo;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryInfoResult;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItinerarySearchInfo;
 import com.adidas.chriniko.itinerarieslookupservice.error.ResourceNotFoundException;
-import com.adidas.chriniko.itinerarieslookupservice.mapper.Mapper;
+import com.adidas.chriniko.itinerarieslookupservice.mapper.ItinerariesToItineraryDisplayInfos;
+import com.adidas.chriniko.itinerarieslookupservice.mapper.RouteInfoToItineraryRouteInfo;
 import com.adidas.chriniko.itinerarieslookupservice.service.criteria.ProcessingCriteriaHandler;
 import com.adidas.chriniko.itinerarieslookupservice.service.provider.DeepCopyProvider;
 import lombok.extern.log4j.Log4j2;
@@ -31,19 +32,26 @@ public class ItineraryLookupService {
     private int itineraryMaxSize;
 
     private final RoutesServiceConnector routesServiceConnector;
+
     private final DeepCopyProvider deepCopyProvider;
+
     private final ProcessingCriteriaHandler processingCriteriaHandler;
-    private final Mapper<Itinerary, ItineraryDisplayInfo> itinerariesToItineraryDisplayInfosMapper;
+
+    private final ItinerariesToItineraryDisplayInfos itinerariesToItineraryDisplayInfos;
+
+    private final RouteInfoToItineraryRouteInfo routeInfoToItineraryRouteInfo;
 
     @Autowired
     public ItineraryLookupService(RoutesServiceConnector routesServiceConnector,
                                   DeepCopyProvider deepCopyProvider,
                                   ProcessingCriteriaHandler processingCriteriaHandler,
-                                  Mapper<Itinerary, ItineraryDisplayInfo> itinerariesToItineraryDisplayInfosMapper) {
+                                  ItinerariesToItineraryDisplayInfos itinerariesToItineraryDisplayInfos,
+                                  RouteInfoToItineraryRouteInfo routeInfoToItineraryRouteInfo) {
         this.routesServiceConnector = routesServiceConnector;
         this.deepCopyProvider = deepCopyProvider;
         this.processingCriteriaHandler = processingCriteriaHandler;
-        this.itinerariesToItineraryDisplayInfosMapper = itinerariesToItineraryDisplayInfosMapper;
+        this.itinerariesToItineraryDisplayInfos = itinerariesToItineraryDisplayInfos;
+        this.routeInfoToItineraryRouteInfo = routeInfoToItineraryRouteInfo;
     }
 
     public ItineraryInfoResult process(ItinerarySearchInfo itinerarySearchInfo, boolean allItinerariesInfo) {
@@ -73,7 +81,7 @@ public class ItineraryLookupService {
                 .map(routeInfo -> {
                     Itinerary itinerary = new Itinerary(routeInfo.getId());
 
-                    ItineraryRouteInfo itineraryRouteInfo = extractItineraryRouteInfo(routeInfo);
+                    ItineraryRouteInfo itineraryRouteInfo = routeInfoToItineraryRouteInfo.transform(routeInfo);
                     itinerary.getRoutesInfos().add(itineraryRouteInfo);
 
                     return itinerary;
@@ -108,7 +116,7 @@ public class ItineraryLookupService {
             if (routesServiceRouteInfos.size() == 1) {
 
                 RouteInfo routesServiceRouteInfo = routesServiceRouteInfos.get(0);
-                ItineraryRouteInfo nextRoute = extractItineraryRouteInfo(routesServiceRouteInfo);
+                ItineraryRouteInfo nextRoute = routeInfoToItineraryRouteInfo.transform(routesServiceRouteInfo);
                 routes.add(nextRoute);
 
             } else { // Note: branching case.
@@ -121,7 +129,7 @@ public class ItineraryLookupService {
 
                     List<ItineraryRouteInfo> deepCopyRoutes = deepCopyProvider.deepCopy(routes, ItineraryRouteInfo.class);
 
-                    ItineraryRouteInfo nextRoute = extractItineraryRouteInfo(routesServiceRouteInfo);
+                    ItineraryRouteInfo nextRoute = routeInfoToItineraryRouteInfo.transform(routesServiceRouteInfo);
 
                     deepCopyRoutes.add(nextRoute);
 
@@ -135,16 +143,18 @@ public class ItineraryLookupService {
                 }
 
                 // for the head expand the already existing itinerary
-                ItineraryRouteInfo nextRoute = extractItineraryRouteInfo(head);
+                ItineraryRouteInfo nextRoute = routeInfoToItineraryRouteInfo.transform(head);
                 routes.add(nextRoute);
             }
         }
     }
 
-    private void generateResponse(ItineraryInfoResult itineraryInfoResult, List<Itinerary> itineraries, boolean allItinerariesInfo) {
+    private void generateResponse(ItineraryInfoResult itineraryInfoResult,
+                                  List<Itinerary> itineraries,
+                                  boolean allItinerariesInfo) {
 
         if (allItinerariesInfo) {
-            List<ItineraryDisplayInfo> allItineraryDisplayInfos = itinerariesToItineraryDisplayInfosMapper.transform(itineraries);
+            List<ItineraryDisplayInfo> allItineraryDisplayInfos = itinerariesToItineraryDisplayInfos.transform(itineraries);
             itineraryInfoResult.setAllItinerariesInfo(allItineraryDisplayInfos);
         }
 
@@ -165,13 +175,4 @@ public class ItineraryLookupService {
         return !allTraversesFinished;
     }
 
-    private ItineraryRouteInfo extractItineraryRouteInfo(RouteInfo routeInfo) {
-        return new ItineraryRouteInfo(
-                routeInfo.getId(),
-                routeInfo.getCity(),
-                routeInfo.getDestinyCity(),
-                routeInfo.getDepartureTime(),
-                routeInfo.getArrivalTime()
-        );
-    }
 }

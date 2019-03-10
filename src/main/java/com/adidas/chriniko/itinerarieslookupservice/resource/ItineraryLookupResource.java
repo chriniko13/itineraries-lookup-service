@@ -54,8 +54,11 @@ public class ItineraryLookupResource {
     )
     public @ResponseBody
     HttpEntity<ItineraryInfoResult> find(@RequestBody @Valid ItinerarySearchInfo input,
-                                         @RequestParam(name = "allItinerariesInfo", required = false, defaultValue = "false") boolean allItinerariesInfo) {
+                                         @RequestParam(name = "allItinerariesInfo", required = false, defaultValue = "false") boolean allItinerariesInfo,
+                                         @RequestParam(name = "allItinerariesInfoDetailed", required = false, defaultValue = "false") boolean allItinerariesInfoDetailed) {
         log.debug("  >> find: {} --- allItinerariesInfo: {}", input, allItinerariesInfo);
+
+        //TODO use allItinerariesInfoDetailed....
 
         ItineraryInfoResult result = itineraryLookupService.process(input, allItinerariesInfo);
         return ResponseEntity.ok(result);

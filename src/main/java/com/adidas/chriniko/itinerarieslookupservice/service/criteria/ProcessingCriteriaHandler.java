@@ -2,7 +2,7 @@ package com.adidas.chriniko.itinerarieslookupservice.service.criteria;
 
 import com.adidas.chriniko.itinerarieslookupservice.domain.Itinerary;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryDisplayInfo;
-import com.adidas.chriniko.itinerarieslookupservice.mapper.Mapper;
+import com.adidas.chriniko.itinerarieslookupservice.mapper.ItinerariesToItineraryDisplayInfos;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,13 +14,13 @@ import java.util.Map;
 public class ProcessingCriteriaHandler {
 
     private final List<ItinerariesProcessingCriteria> itinerariesProcessingCriterias;
-    private final Mapper<Itinerary, ItineraryDisplayInfo> itinerariesToItineraryDisplayInfosMapper;
+    private final ItinerariesToItineraryDisplayInfos itinerariesToItineraryDisplayInfos;
 
     @Autowired
     public ProcessingCriteriaHandler(List<ItinerariesProcessingCriteria> itinerariesProcessingCriterias,
-                                     Mapper<Itinerary, ItineraryDisplayInfo> itinerariesToItineraryDisplayInfosMapper) {
+                                     ItinerariesToItineraryDisplayInfos itinerariesToItineraryDisplayInfos) {
         this.itinerariesProcessingCriterias = itinerariesProcessingCriterias;
-        this.itinerariesToItineraryDisplayInfosMapper = itinerariesToItineraryDisplayInfosMapper;
+        this.itinerariesToItineraryDisplayInfos = itinerariesToItineraryDisplayInfos;
     }
 
     //TODO make it concurrent...
@@ -32,7 +32,7 @@ public class ProcessingCriteriaHandler {
 
             List<Itinerary> processedItineraries = itinerariesProcessingCriteria.process(itineraries);
 
-            List<ItineraryDisplayInfo> displayInfos = itinerariesToItineraryDisplayInfosMapper.transform(processedItineraries);
+            List<ItineraryDisplayInfo> displayInfos = itinerariesToItineraryDisplayInfos.transform(processedItineraries);
 
             itinerariesInfoByProcessingCriteria.put(
                     itinerariesProcessingCriteria.itinerariesCriteriaName(),
