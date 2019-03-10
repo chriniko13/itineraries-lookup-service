@@ -46,7 +46,7 @@ public class ItineraryLookupService {
         this.itinerariesToItineraryDisplayInfosMapper = itinerariesToItineraryDisplayInfosMapper;
     }
 
-    public ItineraryInfoResult process(ItinerarySearchInfo itinerarySearchInfo) {
+    public ItineraryInfoResult process(ItinerarySearchInfo itinerarySearchInfo, boolean allItinerariesInfo) {
 
         final ItineraryInfoResult itineraryInfoResult = new ItineraryInfoResult();
 
@@ -62,7 +62,7 @@ public class ItineraryLookupService {
 
         calculateItineraries(itineraries);
 
-        generateResponse(itineraryInfoResult, itineraries);
+        generateResponse(itineraryInfoResult, itineraries, allItinerariesInfo);
 
         return itineraryInfoResult;
     }
@@ -141,10 +141,12 @@ public class ItineraryLookupService {
         }
     }
 
-    private void generateResponse(ItineraryInfoResult itineraryInfoResult, List<Itinerary> itineraries) {
+    private void generateResponse(ItineraryInfoResult itineraryInfoResult, List<Itinerary> itineraries, boolean allItinerariesInfo) {
 
-        List<ItineraryDisplayInfo> allItineraryDisplayInfos = itinerariesToItineraryDisplayInfosMapper.transform(itineraries);
-        itineraryInfoResult.setAllItinerariesInfo(allItineraryDisplayInfos);
+        if (allItinerariesInfo) {
+            List<ItineraryDisplayInfo> allItineraryDisplayInfos = itinerariesToItineraryDisplayInfosMapper.transform(itineraries);
+            itineraryInfoResult.setAllItinerariesInfo(allItineraryDisplayInfos);
+        }
 
         Map<String /*processing criteria name*/, List<ItineraryDisplayInfo>> itinerariesInfoByProcessingCriteria
                 = processingCriteriaHandler.process(itineraries);

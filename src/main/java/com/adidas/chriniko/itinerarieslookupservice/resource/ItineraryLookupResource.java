@@ -41,6 +41,7 @@ public class ItineraryLookupResource {
         return "Hello";
     }
 
+
     @ApiOperation(value = "Lookup itineraries for provided city", response = ItineraryInfoResult.class)
     @ApiResponses(
             value = {
@@ -52,12 +53,11 @@ public class ItineraryLookupResource {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public @ResponseBody
-    HttpEntity<ItineraryInfoResult> find(@RequestBody @Valid ItinerarySearchInfo input) {
-        log.debug("  >> find: {}", input);
+    HttpEntity<ItineraryInfoResult> find(@RequestBody @Valid ItinerarySearchInfo input,
+                                         @RequestParam(name = "allItinerariesInfo", required = false, defaultValue = "false") boolean allItinerariesInfo) {
+        log.debug("  >> find: {} --- allItinerariesInfo: {}", input, allItinerariesInfo);
 
-        //TODO query param for allItinerariesInfo...
-
-        ItineraryInfoResult result = itineraryLookupService.process(input);
+        ItineraryInfoResult result = itineraryLookupService.process(input, allItinerariesInfo);
         return ResponseEntity.ok(result);
     }
 

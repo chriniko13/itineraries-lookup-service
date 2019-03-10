@@ -23,6 +23,7 @@ public class ProcessingCriteriaHandler {
         this.itinerariesToItineraryDisplayInfosMapper = itinerariesToItineraryDisplayInfosMapper;
     }
 
+    //TODO make it concurrent...
     public Map<String, List<ItineraryDisplayInfo>> process(List<Itinerary> itineraries) {
 
         final Map<String, List<ItineraryDisplayInfo>> itinerariesInfoByProcessingCriteria = new LinkedHashMap<>();
