@@ -55,6 +55,8 @@ public class ItineraryLookupResource {
     HttpEntity<ItineraryInfoResult> find(@RequestBody @Valid ItinerarySearchInfo input) {
         log.debug("  >> find: {}", input);
 
+        //TODO query param for allItinerariesInfo...
+
         ItineraryInfoResult result = itineraryLookupService.process(input);
         return ResponseEntity.ok(result);
     }

@@ -1,4 +1,4 @@
-package com.adidas.chriniko.itinerarieslookupservice.service;
+package com.adidas.chriniko.itinerarieslookupservice.service.provider;
 
 import com.adidas.chriniko.itinerarieslookupservice.error.ProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

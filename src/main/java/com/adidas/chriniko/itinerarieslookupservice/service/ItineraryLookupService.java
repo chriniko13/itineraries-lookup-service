@@ -9,13 +9,17 @@ import com.adidas.chriniko.itinerarieslookupservice.domain.ItineraryRouteInfo;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryDisplayInfo;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryInfoResult;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItinerarySearchInfo;
+import com.adidas.chriniko.itinerarieslookupservice.error.ResourceNotFoundException;
+import com.adidas.chriniko.itinerarieslookupservice.mapper.Mapper;
+import com.adidas.chriniko.itinerarieslookupservice.service.criteria.ProcessingCriteriaHandler;
+import com.adidas.chriniko.itinerarieslookupservice.service.provider.DeepCopyProvider;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -28,11 +32,18 @@ public class ItineraryLookupService {
 
     private final RoutesServiceConnector routesServiceConnector;
     private final DeepCopyProvider deepCopyProvider;
+    private final ProcessingCriteriaHandler processingCriteriaHandler;
+    private final Mapper<Itinerary, ItineraryDisplayInfo> itinerariesToItineraryDisplayInfosMapper;
 
     @Autowired
-    public ItineraryLookupService(RoutesServiceConnector routesServiceConnector, DeepCopyProvider deepCopyProvider) {
+    public ItineraryLookupService(RoutesServiceConnector routesServiceConnector,
+                                  DeepCopyProvider deepCopyProvider,
+                                  ProcessingCriteriaHandler processingCriteriaHandler,
+                                  Mapper<Itinerary, ItineraryDisplayInfo> itinerariesToItineraryDisplayInfosMapper) {
         this.routesServiceConnector = routesServiceConnector;
         this.deepCopyProvider = deepCopyProvider;
+        this.processingCriteriaHandler = processingCriteriaHandler;
+        this.itinerariesToItineraryDisplayInfosMapper = itinerariesToItineraryDisplayInfosMapper;
     }
 
     public ItineraryInfoResult process(ItinerarySearchInfo itinerarySearchInfo) {
@@ -44,12 +55,20 @@ public class ItineraryLookupService {
         List<RouteInfo> routeInfos = routeInfoResult.getResults();
 
         if (routeInfos.isEmpty()) {
-            itineraryInfoResult.setItinerariesInfo(Collections.emptyList());
-            return itineraryInfoResult;
+            throw new ResourceNotFoundException("itinerary not exists for provided: " + itinerarySearchInfo);
         }
 
-        // Note: initialize step.
-        final List<Itinerary> itineraries = routeInfos
+        final List<Itinerary> itineraries = initializeItinerariesState(routeInfos);
+
+        calculateItineraries(itineraries);
+
+        generateResponse(itineraryInfoResult, itineraries);
+
+        return itineraryInfoResult;
+    }
+
+    private List<Itinerary> initializeItinerariesState(List<RouteInfo> routeInfos) {
+        return routeInfos
                 .stream()
                 .map(routeInfo -> {
                     Itinerary itinerary = new Itinerary(routeInfo.getId());
@@ -60,10 +79,12 @@ public class ItineraryLookupService {
                     return itinerary;
                 })
                 .collect(Collectors.toList());
+    }
 
-
-        // Note: calculate step.
-        for (int i = 0; shouldStop(itineraries); i = (i + 1) % itineraries.size()) {
+    private void calculateItineraries(List<Itinerary> itineraries) {
+        for (int i = 0
+             ; shouldStopTraversing(itineraries)
+                ; i = (i + 1) % itineraries.size()) {
 
             Itinerary itinerary = itineraries.get(i);
 
@@ -118,31 +139,19 @@ public class ItineraryLookupService {
                 routes.add(nextRoute);
             }
         }
-
-        // Note: calculate response step.
-        List<ItineraryDisplayInfo> itineraryDisplayInfos = itineraries
-                .stream()
-                .map(itinerary -> {
-                    ItineraryDisplayInfo itineraryDisplayInfo = new ItineraryDisplayInfo();
-
-                    List<String> fastDisplay = itinerary
-                            .getRoutesInfos()
-                            .stream()
-                            .map(routeInfo -> routeInfo.getCity().getName())
-                            .collect(Collectors.toList());
-
-                    itineraryDisplayInfo.setFastDisplay(fastDisplay);
-
-                    return itineraryDisplayInfo;
-                })
-                .collect(Collectors.toList());
-
-        itineraryInfoResult.setItinerariesInfo(itineraryDisplayInfos);
-
-        return itineraryInfoResult;
     }
 
-    private boolean shouldStop(List<Itinerary> itineraries) {
+    private void generateResponse(ItineraryInfoResult itineraryInfoResult, List<Itinerary> itineraries) {
+
+        List<ItineraryDisplayInfo> allItineraryDisplayInfos = itinerariesToItineraryDisplayInfosMapper.transform(itineraries);
+        itineraryInfoResult.setAllItinerariesInfo(allItineraryDisplayInfos);
+
+        Map<String /*processing criteria name*/, List<ItineraryDisplayInfo>> itinerariesInfoByProcessingCriteria
+                = processingCriteriaHandler.process(itineraries);
+        itineraryInfoResult.setItinerariesInfoByProcessingCriteria(itinerariesInfoByProcessingCriteria);
+    }
+
+    private boolean shouldStopTraversing(List<Itinerary> itineraries) {
 
         List<Boolean> traverseStatuses = itineraries
                 .stream()

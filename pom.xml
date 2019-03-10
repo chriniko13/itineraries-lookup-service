@@ -23,8 +23,6 @@
         <skipUTs>false</skipUTs>
         <skipITs>false</skipITs>
 
-        <javatuples.version>1.2</javatuples.version>
-
     </properties>
 
     <dependencies>
@@ -89,12 +87,6 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>${springfox-swagger2.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.javatuples</groupId>
-            <artifactId>javatuples</artifactId>
-            <version>${javatuples.version}</version>
         </dependency>
         <!-- END: Dev Dependencies -->
 
