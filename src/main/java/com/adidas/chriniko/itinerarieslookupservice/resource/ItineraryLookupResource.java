@@ -1,6 +1,6 @@
 package com.adidas.chriniko.itinerarieslookupservice.resource;
 
-import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryInfo;
+import com.adidas.chriniko.itinerarieslookupservice.dto.ItinerarySearchInfo;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryInfoResult;
 import com.adidas.chriniko.itinerarieslookupservice.service.ItineraryLookupService;
 import io.swagger.annotations.Api;
@@ -52,7 +52,7 @@ public class ItineraryLookupResource {
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE
     )
     public @ResponseBody
-    HttpEntity<ItineraryInfoResult> find(@RequestBody @Valid ItineraryInfo input) {
+    HttpEntity<ItineraryInfoResult> find(@RequestBody @Valid ItinerarySearchInfo input) {
         log.debug("  >> find: {}", input);
 
         ItineraryInfoResult result = itineraryLookupService.process(input);

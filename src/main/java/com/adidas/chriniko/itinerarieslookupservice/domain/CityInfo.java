@@ -1,4 +1,4 @@
-package com.adidas.chriniko.itinerarieslookupservice.client.dto;
+package com.adidas.chriniko.itinerarieslookupservice.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

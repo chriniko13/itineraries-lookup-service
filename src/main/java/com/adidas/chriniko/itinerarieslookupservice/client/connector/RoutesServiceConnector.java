@@ -1,6 +1,6 @@
 package com.adidas.chriniko.itinerarieslookupservice.client.connector;
 
-import com.adidas.chriniko.itinerarieslookupservice.client.dto.CityInfo;
+import com.adidas.chriniko.itinerarieslookupservice.domain.CityInfo;
 import com.adidas.chriniko.itinerarieslookupservice.client.dto.RouteInfoResult;
 import com.adidas.chriniko.itinerarieslookupservice.error.ProcessingException;
 import lombok.extern.log4j.Log4j2;
@@ -34,8 +34,7 @@ public class RoutesServiceConnector {
     @Retryable(
             value = {ProcessingException.class},
             maxAttempts = 5,
-            backoff = @Backoff(delay = 70, maxDelay = 200, multiplier = 1.25, random = true),
-            listeners = "connectorRetryListener"
+            backoff = @Backoff(delay = 70, maxDelay = 200, multiplier = 1.25, random = true)
     )
     public RouteInfoResult search(String city, String country) {
 

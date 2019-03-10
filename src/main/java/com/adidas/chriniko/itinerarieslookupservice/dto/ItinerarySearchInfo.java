@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItineraryInfo {
+public class ItinerarySearchInfo {
 
     @ApiModelProperty(notes = "The city's name", required = true)
     @NotBlank

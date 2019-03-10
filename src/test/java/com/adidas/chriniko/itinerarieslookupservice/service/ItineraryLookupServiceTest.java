@@ -22,7 +22,7 @@ public class ItineraryLookupServiceTest {
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
 
-        itineraryLookupService = new ItineraryLookupService(routesServiceConnector);
+        //itineraryLookupService = new ItineraryLookupService(routesServiceConnector);
     }
 
     @Test
