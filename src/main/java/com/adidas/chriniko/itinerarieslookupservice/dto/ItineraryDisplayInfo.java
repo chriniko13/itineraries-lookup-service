@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -17,6 +19,10 @@ public class ItineraryDisplayInfo {
     private int noOfConnections;
 
     private int noOfVisitedCities;
+
+    private Instant departureTimeOfItinerary;
+    private Instant arrivalTimeOfItinerary;
+    private Duration timeDurationOfItinerary;
 
     private List<ItineraryRouteInfo> detailedRouteInfo;
 

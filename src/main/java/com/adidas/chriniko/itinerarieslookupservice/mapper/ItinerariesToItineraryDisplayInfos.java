@@ -5,6 +5,8 @@ import com.adidas.chriniko.itinerarieslookupservice.domain.ItineraryRouteInfo;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryDisplayInfo;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +31,12 @@ public class ItinerariesToItineraryDisplayInfos {
                     itineraryDisplayInfo.setNoOfConnections(routesInfos.size());
 
                     itineraryDisplayInfo.setNoOfVisitedCities(itineraryDisplayInfo.getNoOfConnections() + 1);
+
+                    Instant departureTime = routesInfos.get(0).getDepartureTime();
+                    Instant arrivalTime = routesInfos.get(routesInfos.size() - 1).getArrivalTime();
+                    itineraryDisplayInfo.setDepartureTimeOfItinerary(departureTime);
+                    itineraryDisplayInfo.setArrivalTimeOfItinerary(arrivalTime);
+                    itineraryDisplayInfo.setTimeDurationOfItinerary(Duration.between(departureTime, arrivalTime));
 
                     if (detailedRouteInfo) {
                         itineraryDisplayInfo.setDetailedRouteInfo(routesInfos);

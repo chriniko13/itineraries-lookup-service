@@ -14,7 +14,6 @@ public class LessConnectionsItinerariesProcessingCriteria implements Itineraries
     @Value("${itineraries-processing-criteria.less-connections.result-limit-size}")
     private int limitSize;
 
-
     @Override
     public String itinerariesCriteriaName() {
         return "less-connections";
