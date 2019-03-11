@@ -73,6 +73,10 @@
     * For plain JSON visit: `http://localhost:8181/v2/api-docs`
 
 
+#### Designed to Scale
+* Have used Hazelcast IMap in order to cache results of itinerary lookup operation.
+
+
 #### Reporting (with AOP) Itineraries Lookup Results to Kafka Topic in order to be picked from a future analytics service (need to have run docker-compose first)
 
 * For every successful itinerary lookup operation we send a message-record to kafka topic with name: `itineraries-lookup-reports`
