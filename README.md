@@ -77,6 +77,21 @@
 * Have used Hazelcast IMap in order to cache results of itinerary lookup operation.
 
 
+#### Communication Details with Routes-Service microservice
+* Have used retries:
+  ```java
+        @Retryable(
+                value = {ProcessingException.class},
+                maxAttempts = 5,
+                backoff = @Backoff(delay = 70, maxDelay = 200, multiplier = 1.25, random = true)
+        )
+        public RouteInfoResult search(String city, String country) {
+
+              // ....
+        }
+  ```
+ 
+
 #### Reporting (with AOP) Itineraries Lookup Results to Kafka Topic in order to be picked from a future analytics service (need to have run docker-compose first)
 
 * For every successful itinerary lookup operation we send a message-record to kafka topic with name: `itineraries-lookup-reports`
