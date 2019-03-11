@@ -44,10 +44,8 @@
         * `mvn spring-boot:run -Dspring.profiles.active=dev -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector`
 
 
-#### How to run service (dockerized)
+#### Create Docker Image
 * Execute: `docker build -t itineraries-lookup-service .` in order to build docker image.
-
-* Execute: `docker run -p 8181:8181 itineraries-lookup-service:latest` in order to run the container.
 
 
 #### Execute Unit Tests
