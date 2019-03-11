@@ -34,6 +34,7 @@ public class ItinerariesToItineraryDisplayInfos {
 
                     Instant departureTime = routesInfos.get(0).getDepartureTime();
                     Instant arrivalTime = routesInfos.get(routesInfos.size() - 1).getArrivalTime();
+
                     itineraryDisplayInfo.setDepartureTimeOfItinerary(departureTime);
                     itineraryDisplayInfo.setArrivalTimeOfItinerary(arrivalTime);
                     itineraryDisplayInfo.setTimeDurationOfItinerary(Duration.between(departureTime, arrivalTime));

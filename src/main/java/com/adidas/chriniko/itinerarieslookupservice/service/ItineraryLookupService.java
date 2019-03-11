@@ -16,7 +16,6 @@ import com.adidas.chriniko.itinerarieslookupservice.service.criteria.ProcessingC
 import com.adidas.chriniko.itinerarieslookupservice.service.provider.DeepCopyProvider;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +26,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ItineraryLookupService {
-
-    @Value("${itinerary.traverse-finish.max-size}")
-    private int itineraryMaxSize;
 
     private final RoutesServiceConnector routesServiceConnector;
 
@@ -109,8 +105,7 @@ public class ItineraryLookupService {
             RouteInfoResult routesServiceResult = routesServiceConnector.search(destinyCity.getName(), destinyCity.getCountry());
             List<RouteInfo> routesServiceRouteInfos = routesServiceResult.getResults();
 
-            if (routesServiceRouteInfos.isEmpty()
-                    || routes.size() == itineraryMaxSize /*MAX DEPTH*/) {
+            if (routesServiceRouteInfos.isEmpty()) {
                 itinerary.setTraverseFinished(true);
                 continue;
             }
