@@ -6,11 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItinerarySearchInfo {
+public class ItinerarySearchInfo implements Serializable {
 
     @ApiModelProperty(notes = "The city's name", required = true)
     @NotBlank

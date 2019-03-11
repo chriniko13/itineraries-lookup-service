@@ -37,22 +37,31 @@ public class ItineraryLookupService {
 
     private final RouteInfoToItineraryRouteInfo routeInfoToItineraryRouteInfo;
 
+    private final CacheService cacheService;
+
     @Autowired
     public ItineraryLookupService(RoutesServiceConnector routesServiceConnector,
                                   DeepCopyProvider deepCopyProvider,
                                   ProcessingCriteriaHandler processingCriteriaHandler,
                                   ItinerariesToItineraryDisplayInfos itinerariesToItineraryDisplayInfos,
-                                  RouteInfoToItineraryRouteInfo routeInfoToItineraryRouteInfo) {
+                                  RouteInfoToItineraryRouteInfo routeInfoToItineraryRouteInfo,
+                                  CacheService cacheService) {
         this.routesServiceConnector = routesServiceConnector;
         this.deepCopyProvider = deepCopyProvider;
         this.processingCriteriaHandler = processingCriteriaHandler;
         this.itinerariesToItineraryDisplayInfos = itinerariesToItineraryDisplayInfos;
         this.routeInfoToItineraryRouteInfo = routeInfoToItineraryRouteInfo;
+        this.cacheService = cacheService;
     }
 
     public ItineraryInfoResult process(ItinerarySearchInfo itinerarySearchInfo,
                                        boolean allItinerariesInfo,
                                        boolean allItinerariesInfoDetailed) {
+
+        ItineraryInfoResult cached = cacheService.get(itinerarySearchInfo, allItinerariesInfo, allItinerariesInfoDetailed);
+        if (cached != null) {
+            return cached;
+        }
 
         final ItineraryInfoResult itineraryInfoResult = new ItineraryInfoResult();
 
@@ -69,6 +78,8 @@ public class ItineraryLookupService {
         calculateItineraries(itineraries);
 
         generateResponse(itineraryInfoResult, itineraries, allItinerariesInfo, allItinerariesInfoDetailed);
+
+        cacheService.store(itinerarySearchInfo, allItinerariesInfo, allItinerariesInfoDetailed, itineraryInfoResult);
 
         return itineraryInfoResult;
     }

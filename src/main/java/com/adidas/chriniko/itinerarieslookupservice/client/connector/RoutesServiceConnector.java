@@ -49,7 +49,7 @@ public class RoutesServiceConnector {
 
             RouteInfoResult routeInfoResult = response.getBody();
 
-            log.debug("routes service search result: {}", routeInfoResult);
+            log.trace("routes service search result: {}", routeInfoResult);
 
             return routeInfoResult;
 

@@ -3,11 +3,12 @@ package com.adidas.chriniko.itinerarieslookupservice.domain;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @Data
 @RequiredArgsConstructor
-public class ItineraryRouteInfo {
+public class ItineraryRouteInfo implements Serializable {
 
     private final String id;
 
