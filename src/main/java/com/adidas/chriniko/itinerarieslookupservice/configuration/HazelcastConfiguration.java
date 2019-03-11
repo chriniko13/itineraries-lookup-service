@@ -29,7 +29,7 @@ public class HazelcastConfiguration {
                                 .setName(ITINERARIES_LOOKUPS)
                                 .setMaxSizeConfig(new MaxSizeConfig(200, MaxSizeConfig.MaxSizePolicy.FREE_HEAP_SIZE))
                                 .setEvictionPolicy(EvictionPolicy.LRU)
-                                .setTimeToLiveSeconds(60)
+                                .setTimeToLiveSeconds(60 * 2)
                 );
 
         return config;

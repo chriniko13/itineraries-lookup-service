@@ -48,7 +48,15 @@ public class CacheService {
                 allItinerariesInfoDetailed
         );
 
-        return getMap().get(input);
+        ItineraryInfoResult result = getMap().get(input);
+
+        if (result == null) {
+            log.debug("cache miss for input: {}", input);
+        } else {
+            log.debug("cache hit for input: {}", input);
+        }
+
+        return result;
     }
 
     public void store(ItinerarySearchInfo itinerarySearchInfo,
