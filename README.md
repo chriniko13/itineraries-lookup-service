@@ -26,7 +26,7 @@
 
 
 #### Prequisities in order to local run
-* Need to have up and running the [routes-service](https://github.com/chriniko13/routes-service)
+* Need to have up and running the [Routes Service](https://github.com/chriniko13/routes-service)
 
 * Need to run docker compose, execute: `docker-compose up` this starts a kafka broker and a zookeeper
   which are used from report service (aop/aspect) which sends the result of itinerary lookup search
