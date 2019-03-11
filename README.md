@@ -28,6 +28,12 @@
 #### Prequisities in order to local run
 * Need to have up and running the [routes-service](https://github.com/chriniko13/routes-service)
 
+* Need to run docker compose, execute: `docker-compose up` this starts a kafka broker and a zookeeper
+  which are used from report service (aop/aspect) which sends the result of itinerary lookup search
+  to a kafka topic, called: `itineraries-lookup-reports` in order to be picked up from a future analytics service of the platform.
+  
+* (Optional) When you finish, execute: `docker-compose down` in order to shutdown kafka and zookeeper.
+
 #### How to run service (not dockerized)
 * Two options:
     * Execute: 
@@ -65,6 +71,49 @@
     * For UI visit: `http://localhost:8181/swagger-ui.html`
 
     * For plain JSON visit: `http://localhost:8181/v2/api-docs`
+
+
+#### Reporting (with AOP) Itineraries Lookup Results to Kafka Topic in order to be picked from a future analytics service (need to have run docker-compose first)
+
+* For every successful itinerary lookup operation we send a message-record to kafka topic with name: `itineraries-lookup-reports`
+
+* To see all topics in kafka, execute: `./kafka-topics.sh --list --zookeeper localhost:2181`
+    * Sample output:
+    ```
+    __confluent.support.metrics
+    __consumer_offsets
+    itineraries-lookup-reports
+    
+    
+    ....
+
+    ```
+
+* To see the report messages, execute: `./kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic itineraries-lookup-reports --from-beginning`
+    
+    * Sample output:
+    ```
+    {"itinerariesInfoByProcessingCriteria":{"less-connections-and-less-time":[{"fastDisplay":"[Murcia ---> Vitoria]","noOfConnections":1,
+    "noOfVisitedCities":2,"departureTimeOfItinerary":"2019-03-11T14:58:05Z","arrivalTimeOfItinerary":"2019-03-11T15:58:05Z","timeDurationOfItinerary":"PT1H",
+    "detailedRouteInfo":[{"id":"dba3c5bf-c0d7-400a-a8f8-1fa72db72ac3","city":{"name":"Murcia","country":"Spain"},"destinyCity":{"name":"Vitoria","country":"Spain"},
+    "departureTime":"2019-03-11T14:58:05Z","arrivalTime":"2019-03-11T15:58:05Z"}]},{"fastDisplay":"[Murcia ---> Algeciras]","noOfConnections":1,"noOfVisitedCities":2,
+    "departureTimeOfItinerary":"2019-03-11T14:58:05Z","arrivalTimeOfItinerary":"2019-03-11T17:58:05Z","timeDurationOfItinerary":"PT3H",
+    "detailedRouteInfo":[{"id":"eb74d14a-ab70-4462-aa9f-5b3b503150db","city":{"name":"Murcia","country":"Spain"},"destinyCity":{"name":"Algeciras","country":"Spain"},
+    "departureTime":"2019-03-11T14:58:05Z","arrivalTime":"2019-03-11T17:58:05Z"}]},{"fastDisplay":"[Murcia ---> Linares ---> Cartagena]","noOfConnections":2,
+    "noOfVisitedCities":3,"departureTimeOfItinerary":"2019-03-11T14:58:05Z","arrivalTimeOfItinerary":"2019-03-11T19:58:05Z","timeDurationOfItinerary":"PT5H",
+    "detailedRouteInfo":[{"id":"02d08931-bac3-4b7f-a887-4cce641aa1be","city":{"name":"Murcia","country":"Spain"},"destinyCity":{"name":"Linares","country":"Spain"},
+    "departureTime":"2019-03-11T14:58:05Z","arrivalTime":"2019-03-11T17:58:05Z"},{"id":"0588a326-8752-4e88-91dc-d568697df40d",
+    "city":{"name":"Linares","country":"Spain"},"destinyCity":{"name":"Cartagena","country":"Spain"},"departureTime":"2019-03-11T17:58:05Z",
+    "arrivalTime":"2019-03-11T19:58:05Z"}]},{"fastDisplay":"[Murcia ---> Malaga ---> Albacete]","noOfConnections":2,"noOfVisitedCities":3,
+    "departureTimeOfItinerary":"2019-03-11T14:58:05Z","arrivalTimeOfItinerary":"2019-03-11T19:58:05Z","timeDurationOfItinerary":"PT5H",
+    "detailedRouteInfo":[{"id":"143463c2-6d27-4766-b8c7-51bd429dfeda","city":{"name":"Murcia","country":"Spain"},"destinyCity":{"name":"Malaga","country":"Spain"},
+    "departureTime":"2019-03-11T14:58:05Z","arrivalTime":"2019-03-11T16:58:05Z"},{"id":"73f916cc-d19e-4d27-8cbf-dc9d1d57eee4",
+    
+
+    ....
+    
+    ```
+    
 
 
 #### Example Request - Response

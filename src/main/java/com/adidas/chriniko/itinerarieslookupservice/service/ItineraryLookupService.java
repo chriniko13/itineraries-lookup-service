@@ -13,6 +13,7 @@ import com.adidas.chriniko.itinerarieslookupservice.error.ResourceNotFoundExcept
 import com.adidas.chriniko.itinerarieslookupservice.mapper.ItinerariesToItineraryDisplayInfos;
 import com.adidas.chriniko.itinerarieslookupservice.mapper.RouteInfoToItineraryRouteInfo;
 import com.adidas.chriniko.itinerarieslookupservice.service.criteria.ProcessingCriteriaHandler;
+import com.adidas.chriniko.itinerarieslookupservice.service.interceptor.Report;
 import com.adidas.chriniko.itinerarieslookupservice.service.provider.DeepCopyProvider;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,7 @@ public class ItineraryLookupService {
         this.cacheService = cacheService;
     }
 
+    @Report
     public ItineraryInfoResult process(ItinerarySearchInfo itinerarySearchInfo,
                                        boolean allItinerariesInfo,
                                        boolean allItinerariesInfoDetailed) {
