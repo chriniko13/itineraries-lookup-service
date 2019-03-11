@@ -68,7 +68,7 @@
 
 
 #### Example Request - Response
-* Post at:
+* Post at: localhost:8181/api/itinerary-info?allItinerariesInfo=false&allItinerariesInfoDetailed=false
   with body:
   
   ```json
