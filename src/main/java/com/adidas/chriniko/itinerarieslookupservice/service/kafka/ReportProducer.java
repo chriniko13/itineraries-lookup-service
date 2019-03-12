@@ -8,8 +8,10 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.util.Properties;
 import java.util.concurrent.CompletableFuture;
 
@@ -18,15 +20,19 @@ import java.util.concurrent.CompletableFuture;
 @Component
 public class ReportProducer {
 
-    private static final String TOPIC_NAME = "itineraries-lookup-reports";
-    private static final String BOOTSTRAP_SERVERS = "localhost:9092";
-    private final KafkaProducer<ItinerarySearchInfo, ItineraryInfoResult> producer;
+    @Value("${report-producer.topic-name}")
+    private String topicName;
 
+    @Value("${report-producer.bootstrap-servers}")
+    private String bootstrapServers;
 
-    public ReportProducer() {
+    private KafkaProducer<ItinerarySearchInfo, ItineraryInfoResult> producer;
+
+    @PostConstruct
+    public void init() {
         Properties props = new Properties();
 
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         props.put(ProducerConfig.CLIENT_ID_CONFIG, "KafkaExampleProducer");
 
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, ItinerarySearchInfoSerializer.class.getName());
@@ -41,7 +47,7 @@ public class ReportProducer {
         CompletableFuture<RecordMetadata> cf = new CompletableFuture<>();
 
         ProducerRecord<ItinerarySearchInfo, ItineraryInfoResult> record
-                = new ProducerRecord<>(TOPIC_NAME, itinerarySearchInfo, itineraryInfoResult);
+                = new ProducerRecord<>(topicName, itinerarySearchInfo, itineraryInfoResult);
 
         producer.send(record, (metadata, exception) -> {
             if (exception != null) {

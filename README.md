@@ -26,6 +26,8 @@
 
 
 #### Prequisities in order to local run
+* Need to have Docker Compose
+
 * Need to have up and running the [Routes Service](https://github.com/chriniko13/routes-service)
 
 * Need to run docker compose, execute: `docker-compose up` this starts a kafka broker and a zookeeper
@@ -35,9 +37,11 @@
 * (Optional) When you finish, execute: `docker-compose down` in order to shutdown kafka and zookeeper.
 
 #### How to run service (not dockerized)
+* You should have executed: `docker-compose up`
+
 * Two options:
     * Execute: 
-        * `mvn clean install -DskipTests=true`
+        * `mvn clean install -DskipUTs=true -DskipITs`
         * `java -jar -Dspring.profiles.active=dev -DLog4jContextSelector=org.apache.logging.log4j.core.async.AsyncLoggerContextSelector target/itineraries-lookup-service-1.0.0-SNAPSHOT.jar`
                 
     * Execute:
@@ -45,8 +49,10 @@
 
 
 #### Create Docker Image
-* Execute: `docker build -t itineraries-lookup-service .` in order to build docker image.
+* Execute: `mvn clean install -DskipUTs=true -DskipITs`
+* Execute: `docker build -t chriniko/itineraries-lookup-service:1.0.0 .` in order to build docker image.
 
+* Fast: `mvn clean install -DskipUTs=true -DskipITs && docker build -t chriniko/itineraries-lookup-service:1.0.0 .`
 
 #### Execute Unit Tests
 * Execute: `mvn clean test`
@@ -89,7 +95,15 @@
         }
   ```
  
-
+ 
+ #### Properties Configuration
+ * `itineraries-processing-criteria.less-connections.result-limit-size=20` how many results will be sent, after less connections processing criteria.
+ 
+ * `itineraries-processing-criteria.less-time.result-limit-size=20` how many results will be sent, after less time processing criteria.
+ 
+ * `itineraries-processing-criteria.less-connections-and-less-time.result-limit-size=20` how many results will be sent, less connections and less time processing criteria
+ 
+ 
 #### Reporting (with AOP) Itineraries Lookup Results to Kafka Topic in order to be picked from a future analytics service (need to have run docker-compose first)
 
 * For every successful itinerary lookup operation we send a message-record to kafka topic with name: `itineraries-lookup-reports`
