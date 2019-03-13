@@ -61,6 +61,8 @@
 #### Execute Integration Tests (you should run docker-compose up first)
 * Execute: `mvn clean integration-test -DskipUTs=true` or `mvn clean verify -DskipUTs=true`
 
+* Note: [Routes Service](https://github.com/chriniko13/routes-service) responses mocked with the help of Wiremock (http://wiremock.org/)
+
 
 #### Test Coverage (via JaCoCo)
 * In order to generate reports execute: `mvn clean verify`
