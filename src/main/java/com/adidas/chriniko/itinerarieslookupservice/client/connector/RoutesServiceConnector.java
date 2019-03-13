@@ -3,6 +3,8 @@ package com.adidas.chriniko.itinerarieslookupservice.client.connector;
 import com.adidas.chriniko.itinerarieslookupservice.domain.CityInfo;
 import com.adidas.chriniko.itinerarieslookupservice.client.dto.RouteInfoResult;
 import com.adidas.chriniko.itinerarieslookupservice.error.ProcessingException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +29,9 @@ public class RoutesServiceConnector {
     private final RestTemplate restTemplate;
 
     @Autowired
+    private ObjectMapper objectMapper;
+
+    @Autowired
     public RoutesServiceConnector(RestTemplate restTemplate) {
         this.restTemplate = restTemplate;
     }
@@ -49,7 +54,11 @@ public class RoutesServiceConnector {
 
             RouteInfoResult routeInfoResult = response.getBody();
 
-            log.trace("routes service search result: {}", routeInfoResult);
+            try {
+                log.debug("request: {} --- response: {}", cityInfo, objectMapper.writeValueAsString(routeInfoResult));
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
 
             return routeInfoResult;
 

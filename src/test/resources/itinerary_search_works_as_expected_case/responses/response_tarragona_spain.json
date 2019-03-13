@@ -1,0 +1,862 @@
+{
+  "itinerariesInfoByProcessingCriteria": {
+    "less-connections-and-less-time": [
+      {
+        "fastDisplay": "[Tarragona ---> Arrecife ---> Las Palmas]",
+        "noOfConnections": 2,
+        "noOfVisitedCities": 3,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T03:09:59Z",
+        "timeDurationOfItinerary": "PT3H",
+        "detailedRouteInfo": [
+          {
+            "id": "f3c05c7d-6b22-4fec-98bd-42eb30dd3490",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Arrecife",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T02:09:59Z"
+          },
+          {
+            "id": "c2f67e40-fe91-4f72-9049-9c37fe0270dd",
+            "city": {
+              "name": "Arrecife",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Las Palmas",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T02:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Jaen]",
+        "noOfConnections": 1,
+        "noOfVisitedCities": 2,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T04:09:59Z",
+        "timeDurationOfItinerary": "PT4H",
+        "detailedRouteInfo": [
+          {
+            "id": "222e1394-d884-4488-8eb8-09b363a688f9",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Jaen",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T04:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Vitoria ---> Santander ---> Logrono ---> Barcelona ---> Mataro]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T09:09:59Z",
+        "timeDurationOfItinerary": "PT9H",
+        "detailedRouteInfo": [
+          {
+            "id": "fec3084a-45e2-4577-9daa-f4a34160904e",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Vitoria",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T01:09:59Z"
+          },
+          {
+            "id": "febd8ead-891c-4ae5-ad09-d6ba800605df",
+            "city": {
+              "name": "Vitoria",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Santander",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T01:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          },
+          {
+            "id": "5a4ef1dd-045b-4efc-a0f1-c31a3824a0b0",
+            "city": {
+              "name": "Santander",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Logrono",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T03:09:59Z",
+            "arrivalTime": "2019-03-13T04:09:59Z"
+          },
+          {
+            "id": "fcef99aa-fb75-45d4-8e11-e1ede770d23e",
+            "city": {
+              "name": "Logrono",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Barcelona",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T04:09:59Z",
+            "arrivalTime": "2019-03-13T08:09:59Z"
+          },
+          {
+            "id": "622a93b3-9b5e-4634-8d08-f5776fe5ec68",
+            "city": {
+              "name": "Barcelona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Mataro",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T08:09:59Z",
+            "arrivalTime": "2019-03-13T09:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> La Coruna ---> Ourense ---> Bilbao ---> Santa Cruz de Tenerife ---> Seville]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T11:09:59Z",
+        "timeDurationOfItinerary": "PT11H",
+        "detailedRouteInfo": [
+          {
+            "id": "8f2e304a-e89b-4c42-a6ee-b6a1452629da",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "La Coruna",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T02:09:59Z"
+          },
+          {
+            "id": "3e8a8e24-a8b5-4fb7-8a68-25006224acf3",
+            "city": {
+              "name": "La Coruna",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Ourense",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T02:09:59Z",
+            "arrivalTime": "2019-03-13T05:09:59Z"
+          },
+          {
+            "id": "cbe14205-addd-45d2-9cab-8bf18fb09f65",
+            "city": {
+              "name": "Ourense",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Bilbao",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T05:09:59Z",
+            "arrivalTime": "2019-03-13T06:09:59Z"
+          },
+          {
+            "id": "df4fd978-76a9-4a9f-aab3-bb9a5dd0c464",
+            "city": {
+              "name": "Bilbao",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Santa Cruz de Tenerife",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T06:09:59Z",
+            "arrivalTime": "2019-03-13T07:09:59Z"
+          },
+          {
+            "id": "6143f03a-bb3e-47fe-b540-e00deb76593a",
+            "city": {
+              "name": "Santa Cruz de Tenerife",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Seville",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T07:09:59Z",
+            "arrivalTime": "2019-03-13T11:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Merida ---> Algeciras ---> Marbella ---> Almeria ---> Cordoba]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T14:09:59Z",
+        "timeDurationOfItinerary": "PT14H",
+        "detailedRouteInfo": [
+          {
+            "id": "6e8e753d-3b94-4d77-8362-2950a6b6a0d5",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Merida",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          },
+          {
+            "id": "87e48b18-640f-44b1-9fa8-c6ae03672e48",
+            "city": {
+              "name": "Merida",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Algeciras",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T03:09:59Z",
+            "arrivalTime": "2019-03-13T05:09:59Z"
+          },
+          {
+            "id": "ce69a92a-0653-497f-9a07-0ea8f09f8237",
+            "city": {
+              "name": "Algeciras",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Marbella",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T05:09:59Z",
+            "arrivalTime": "2019-03-13T09:09:59Z"
+          },
+          {
+            "id": "ddf16a25-3986-44f0-a558-dbf3a99e00f6",
+            "city": {
+              "name": "Marbella",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Almeria",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T09:09:59Z",
+            "arrivalTime": "2019-03-13T13:09:59Z"
+          },
+          {
+            "id": "87868690-109c-4e80-95b8-29b2d88b3ed9",
+            "city": {
+              "name": "Almeria",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Cordoba",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T13:09:59Z",
+            "arrivalTime": "2019-03-13T14:09:59Z"
+          }
+        ]
+      }
+    ],
+    "less-connections": [
+      {
+        "fastDisplay": "[Tarragona ---> Jaen]",
+        "noOfConnections": 1,
+        "noOfVisitedCities": 2,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T04:09:59Z",
+        "timeDurationOfItinerary": "PT4H",
+        "detailedRouteInfo": [
+          {
+            "id": "222e1394-d884-4488-8eb8-09b363a688f9",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Jaen",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T04:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Arrecife ---> Las Palmas]",
+        "noOfConnections": 2,
+        "noOfVisitedCities": 3,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T03:09:59Z",
+        "timeDurationOfItinerary": "PT3H",
+        "detailedRouteInfo": [
+          {
+            "id": "f3c05c7d-6b22-4fec-98bd-42eb30dd3490",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Arrecife",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T02:09:59Z"
+          },
+          {
+            "id": "c2f67e40-fe91-4f72-9049-9c37fe0270dd",
+            "city": {
+              "name": "Arrecife",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Las Palmas",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T02:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Merida ---> Algeciras ---> Marbella ---> Almeria ---> Cordoba]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T14:09:59Z",
+        "timeDurationOfItinerary": "PT14H",
+        "detailedRouteInfo": [
+          {
+            "id": "6e8e753d-3b94-4d77-8362-2950a6b6a0d5",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Merida",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          },
+          {
+            "id": "87e48b18-640f-44b1-9fa8-c6ae03672e48",
+            "city": {
+              "name": "Merida",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Algeciras",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T03:09:59Z",
+            "arrivalTime": "2019-03-13T05:09:59Z"
+          },
+          {
+            "id": "ce69a92a-0653-497f-9a07-0ea8f09f8237",
+            "city": {
+              "name": "Algeciras",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Marbella",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T05:09:59Z",
+            "arrivalTime": "2019-03-13T09:09:59Z"
+          },
+          {
+            "id": "ddf16a25-3986-44f0-a558-dbf3a99e00f6",
+            "city": {
+              "name": "Marbella",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Almeria",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T09:09:59Z",
+            "arrivalTime": "2019-03-13T13:09:59Z"
+          },
+          {
+            "id": "87868690-109c-4e80-95b8-29b2d88b3ed9",
+            "city": {
+              "name": "Almeria",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Cordoba",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T13:09:59Z",
+            "arrivalTime": "2019-03-13T14:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> La Coruna ---> Ourense ---> Bilbao ---> Santa Cruz de Tenerife ---> Seville]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T11:09:59Z",
+        "timeDurationOfItinerary": "PT11H",
+        "detailedRouteInfo": [
+          {
+            "id": "8f2e304a-e89b-4c42-a6ee-b6a1452629da",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "La Coruna",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T02:09:59Z"
+          },
+          {
+            "id": "3e8a8e24-a8b5-4fb7-8a68-25006224acf3",
+            "city": {
+              "name": "La Coruna",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Ourense",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T02:09:59Z",
+            "arrivalTime": "2019-03-13T05:09:59Z"
+          },
+          {
+            "id": "cbe14205-addd-45d2-9cab-8bf18fb09f65",
+            "city": {
+              "name": "Ourense",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Bilbao",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T05:09:59Z",
+            "arrivalTime": "2019-03-13T06:09:59Z"
+          },
+          {
+            "id": "df4fd978-76a9-4a9f-aab3-bb9a5dd0c464",
+            "city": {
+              "name": "Bilbao",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Santa Cruz de Tenerife",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T06:09:59Z",
+            "arrivalTime": "2019-03-13T07:09:59Z"
+          },
+          {
+            "id": "6143f03a-bb3e-47fe-b540-e00deb76593a",
+            "city": {
+              "name": "Santa Cruz de Tenerife",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Seville",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T07:09:59Z",
+            "arrivalTime": "2019-03-13T11:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Vitoria ---> Santander ---> Logrono ---> Barcelona ---> Mataro]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T09:09:59Z",
+        "timeDurationOfItinerary": "PT9H",
+        "detailedRouteInfo": [
+          {
+            "id": "fec3084a-45e2-4577-9daa-f4a34160904e",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Vitoria",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T01:09:59Z"
+          },
+          {
+            "id": "febd8ead-891c-4ae5-ad09-d6ba800605df",
+            "city": {
+              "name": "Vitoria",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Santander",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T01:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          },
+          {
+            "id": "5a4ef1dd-045b-4efc-a0f1-c31a3824a0b0",
+            "city": {
+              "name": "Santander",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Logrono",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T03:09:59Z",
+            "arrivalTime": "2019-03-13T04:09:59Z"
+          },
+          {
+            "id": "fcef99aa-fb75-45d4-8e11-e1ede770d23e",
+            "city": {
+              "name": "Logrono",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Barcelona",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T04:09:59Z",
+            "arrivalTime": "2019-03-13T08:09:59Z"
+          },
+          {
+            "id": "622a93b3-9b5e-4634-8d08-f5776fe5ec68",
+            "city": {
+              "name": "Barcelona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Mataro",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T08:09:59Z",
+            "arrivalTime": "2019-03-13T09:09:59Z"
+          }
+        ]
+      }
+    ],
+    "less-time": [
+      {
+        "fastDisplay": "[Tarragona ---> Arrecife ---> Las Palmas]",
+        "noOfConnections": 2,
+        "noOfVisitedCities": 3,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T03:09:59Z",
+        "timeDurationOfItinerary": "PT3H",
+        "detailedRouteInfo": [
+          {
+            "id": "f3c05c7d-6b22-4fec-98bd-42eb30dd3490",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Arrecife",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T02:09:59Z"
+          },
+          {
+            "id": "c2f67e40-fe91-4f72-9049-9c37fe0270dd",
+            "city": {
+              "name": "Arrecife",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Las Palmas",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T02:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Jaen]",
+        "noOfConnections": 1,
+        "noOfVisitedCities": 2,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T04:09:59Z",
+        "timeDurationOfItinerary": "PT4H",
+        "detailedRouteInfo": [
+          {
+            "id": "222e1394-d884-4488-8eb8-09b363a688f9",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Jaen",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T04:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Vitoria ---> Santander ---> Logrono ---> Barcelona ---> Mataro]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T09:09:59Z",
+        "timeDurationOfItinerary": "PT9H",
+        "detailedRouteInfo": [
+          {
+            "id": "fec3084a-45e2-4577-9daa-f4a34160904e",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Vitoria",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T01:09:59Z"
+          },
+          {
+            "id": "febd8ead-891c-4ae5-ad09-d6ba800605df",
+            "city": {
+              "name": "Vitoria",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Santander",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T01:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          },
+          {
+            "id": "5a4ef1dd-045b-4efc-a0f1-c31a3824a0b0",
+            "city": {
+              "name": "Santander",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Logrono",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T03:09:59Z",
+            "arrivalTime": "2019-03-13T04:09:59Z"
+          },
+          {
+            "id": "fcef99aa-fb75-45d4-8e11-e1ede770d23e",
+            "city": {
+              "name": "Logrono",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Barcelona",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T04:09:59Z",
+            "arrivalTime": "2019-03-13T08:09:59Z"
+          },
+          {
+            "id": "622a93b3-9b5e-4634-8d08-f5776fe5ec68",
+            "city": {
+              "name": "Barcelona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Mataro",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T08:09:59Z",
+            "arrivalTime": "2019-03-13T09:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> La Coruna ---> Ourense ---> Bilbao ---> Santa Cruz de Tenerife ---> Seville]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T11:09:59Z",
+        "timeDurationOfItinerary": "PT11H",
+        "detailedRouteInfo": [
+          {
+            "id": "8f2e304a-e89b-4c42-a6ee-b6a1452629da",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "La Coruna",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T02:09:59Z"
+          },
+          {
+            "id": "3e8a8e24-a8b5-4fb7-8a68-25006224acf3",
+            "city": {
+              "name": "La Coruna",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Ourense",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T02:09:59Z",
+            "arrivalTime": "2019-03-13T05:09:59Z"
+          },
+          {
+            "id": "cbe14205-addd-45d2-9cab-8bf18fb09f65",
+            "city": {
+              "name": "Ourense",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Bilbao",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T05:09:59Z",
+            "arrivalTime": "2019-03-13T06:09:59Z"
+          },
+          {
+            "id": "df4fd978-76a9-4a9f-aab3-bb9a5dd0c464",
+            "city": {
+              "name": "Bilbao",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Santa Cruz de Tenerife",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T06:09:59Z",
+            "arrivalTime": "2019-03-13T07:09:59Z"
+          },
+          {
+            "id": "6143f03a-bb3e-47fe-b540-e00deb76593a",
+            "city": {
+              "name": "Santa Cruz de Tenerife",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Seville",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T07:09:59Z",
+            "arrivalTime": "2019-03-13T11:09:59Z"
+          }
+        ]
+      },
+      {
+        "fastDisplay": "[Tarragona ---> Merida ---> Algeciras ---> Marbella ---> Almeria ---> Cordoba]",
+        "noOfConnections": 5,
+        "noOfVisitedCities": 6,
+        "departureTimeOfItinerary": "2019-03-13T00:09:59Z",
+        "arrivalTimeOfItinerary": "2019-03-13T14:09:59Z",
+        "timeDurationOfItinerary": "PT14H",
+        "detailedRouteInfo": [
+          {
+            "id": "6e8e753d-3b94-4d77-8362-2950a6b6a0d5",
+            "city": {
+              "name": "Tarragona",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Merida",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T00:09:59Z",
+            "arrivalTime": "2019-03-13T03:09:59Z"
+          },
+          {
+            "id": "87e48b18-640f-44b1-9fa8-c6ae03672e48",
+            "city": {
+              "name": "Merida",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Algeciras",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T03:09:59Z",
+            "arrivalTime": "2019-03-13T05:09:59Z"
+          },
+          {
+            "id": "ce69a92a-0653-497f-9a07-0ea8f09f8237",
+            "city": {
+              "name": "Algeciras",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Marbella",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T05:09:59Z",
+            "arrivalTime": "2019-03-13T09:09:59Z"
+          },
+          {
+            "id": "ddf16a25-3986-44f0-a558-dbf3a99e00f6",
+            "city": {
+              "name": "Marbella",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Almeria",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T09:09:59Z",
+            "arrivalTime": "2019-03-13T13:09:59Z"
+          },
+          {
+            "id": "87868690-109c-4e80-95b8-29b2d88b3ed9",
+            "city": {
+              "name": "Almeria",
+              "country": "Spain"
+            },
+            "destinyCity": {
+              "name": "Cordoba",
+              "country": "Spain"
+            },
+            "departureTime": "2019-03-13T13:09:59Z",
+            "arrivalTime": "2019-03-13T14:09:59Z"
+          }
+        ]
+      }
+    ]
+  }
+}

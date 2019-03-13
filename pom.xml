@@ -24,6 +24,7 @@
         <skipITs>false</skipITs>
 
         <kafka-clients.version>2.1.1</kafka-clients.version>
+        <wiremock-jre8.version>2.21.0</wiremock-jre8.version>
     </properties>
 
     <dependencies>
@@ -112,6 +113,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.tomakehurst</groupId>
+            <artifactId>wiremock-jre8</artifactId>
+            <version>${wiremock-jre8.version}</version>
             <scope>test</scope>
         </dependency>
         <!-- END: Test Dependencies-->
