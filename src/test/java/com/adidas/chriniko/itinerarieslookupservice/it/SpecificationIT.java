@@ -44,10 +44,10 @@ public class SpecificationIT {
     private RestTemplate restTemplate;
 
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8080); // No-args constructor defaults to port 8080
+    public WireMockRule wireMockRule = new WireMockRule(8080);
 
     @Test
-    public void itinerary_search_works_as_expected_case() throws Exception {
+    public void itinerary_search_works_as_expected_allItinerariesInfo_false_and_allItinerariesInfoDetailed_false_case() throws Exception {
         // given
         initWiremockResponses();
 
@@ -77,7 +77,71 @@ public class SpecificationIT {
         ItineraryInfoResult expected = objectMapper.readValue(expectedAsString, ItineraryInfoResult.class);
 
         Assert.assertEquals(expected, result);
+    }
 
+    @Test
+    public void itinerary_search_works_as_expected_allItinerariesInfo_true_and_allItinerariesInfoDetailed_false_case() throws Exception {
+        // given
+        initWiremockResponses();
+
+        ItinerarySearchInfo itinerarySearchInfo = new ItinerarySearchInfo("Tarragona", "Spain");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Type", "application/json");
+        HttpEntity<ItinerarySearchInfo> httpEntity = new HttpEntity<>(itinerarySearchInfo, httpHeaders);
+
+        // when
+        ResponseEntity<ItineraryInfoResult> responseEntity = restTemplate.exchange("http://localhost:" + port + "/api/itinerary-info?allItinerariesInfo=true&allItinerariesInfoDetailed=false",
+                HttpMethod.POST,
+                httpEntity,
+                ItineraryInfoResult.class
+        );
+
+        // then
+        Assert.assertNotNull(responseEntity);
+
+        ItineraryInfoResult result = responseEntity.getBody();
+
+        String expectedAsString = Resources.toString(
+                this.getClass().getResource("/itinerary_search_works_as_expected_case/responses/response_tarragona_spain_2.json"),
+                Charset.forName("UTF-8")
+        );
+
+        ItineraryInfoResult expected = objectMapper.readValue(expectedAsString, ItineraryInfoResult.class);
+
+        Assert.assertEquals(expected, result);
+    }
+
+    @Test
+    public void itinerary_search_works_as_expected_allItinerariesInfo_true_and_allItinerariesInfoDetailed_true_case() throws Exception {
+        // given
+        initWiremockResponses();
+
+        ItinerarySearchInfo itinerarySearchInfo = new ItinerarySearchInfo("Tarragona", "Spain");
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Type", "application/json");
+        HttpEntity<ItinerarySearchInfo> httpEntity = new HttpEntity<>(itinerarySearchInfo, httpHeaders);
+
+        // when
+        ResponseEntity<ItineraryInfoResult> responseEntity = restTemplate.exchange("http://localhost:" + port + "/api/itinerary-info?allItinerariesInfo=true&allItinerariesInfoDetailed=true",
+                HttpMethod.POST,
+                httpEntity,
+                ItineraryInfoResult.class
+        );
+
+        // then
+        Assert.assertNotNull(responseEntity);
+
+        ItineraryInfoResult result = responseEntity.getBody();
+
+
+        String expectedAsString = Resources.toString(
+                this.getClass().getResource("/itinerary_search_works_as_expected_case/responses/response_tarragona_spain_3.json"),
+                Charset.forName("UTF-8")
+        );
+
+        ItineraryInfoResult expected = objectMapper.readValue(expectedAsString, ItineraryInfoResult.class);
+
+        Assert.assertEquals(expected, result);
     }
 
     private void initWiremockResponses() {
