@@ -1,17 +1,22 @@
 package com.adidas.chriniko.itinerarieslookupservice.it;
 
 import com.adidas.chriniko.itinerarieslookupservice.ItinerariesLookupServiceApplication;
+import com.adidas.chriniko.itinerarieslookupservice.configuration.HazelcastConfiguration;
+import com.adidas.chriniko.itinerarieslookupservice.core.SecuritySupport;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItineraryInfoResult;
 import com.adidas.chriniko.itinerarieslookupservice.dto.ItinerarySearchInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
 import com.github.tomakehurst.wiremock.matching.EqualToJsonPattern;
 import com.google.common.io.Resources;
+import com.hazelcast.core.HazelcastInstance;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
@@ -19,6 +24,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.nio.charset.Charset;
@@ -44,7 +51,56 @@ public class SpecificationIT {
     private RestTemplate restTemplate;
 
     @Rule
-    public WireMockRule wireMockRule = new WireMockRule(8080);
+    public WireMockRule wireMockRule = new WireMockRule(1234);
+
+    @Value("${routes-service.security.username}")
+    private String routesServiceUsername;
+
+    @Value("${routes-service.security.password}")
+    private String routesServicePassword;
+
+    @Value("${security.username}")
+    private String username;
+
+    @Value("${security.password}")
+    private String password;
+
+    @Autowired
+    private HazelcastInstance hazelcastInstance;
+
+    @Before
+    public void setup() {
+        hazelcastInstance.getMap(HazelcastConfiguration.ITINERARIES_LOOKUPS).clear();
+    }
+
+    @Test
+    public void security_works_as_expected() {
+
+        // given
+        ItinerarySearchInfo itinerarySearchInfo = new ItinerarySearchInfo("Tarragona", "Spain");
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-Type", "application/json");
+
+        HttpEntity<ItinerarySearchInfo> httpEntity = new HttpEntity<>(itinerarySearchInfo, httpHeaders);
+
+        // when
+        try {
+            ResponseEntity<ItineraryInfoResult> responseEntity = restTemplate.exchange("http://localhost:" + port + "/api/itinerary-info?allItinerariesInfo=false&allItinerariesInfoDetailed=false",
+                    HttpMethod.POST,
+                    httpEntity,
+                    ItineraryInfoResult.class
+            );
+        } catch (RestClientException error) {
+            // then
+            Assert.assertTrue(error instanceof HttpClientErrorException.Unauthorized);
+        }
+
+        Assert.assertEquals(
+                0,
+                hazelcastInstance.getMap(HazelcastConfiguration.ITINERARIES_LOOKUPS).size()
+        );
+    }
 
     @Test
     public void itinerary_search_works_as_expected_allItinerariesInfo_false_and_allItinerariesInfoDetailed_false_case() throws Exception {
@@ -52,8 +108,13 @@ public class SpecificationIT {
         initWiremockResponses();
 
         ItinerarySearchInfo itinerarySearchInfo = new ItinerarySearchInfo("Tarragona", "Spain");
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json");
+
+        String[] securityResult = SecuritySupport.getBasicAuthHeader(username, password);
+        httpHeaders.add(securityResult[0], securityResult[1]);
+
         HttpEntity<ItinerarySearchInfo> httpEntity = new HttpEntity<>(itinerarySearchInfo, httpHeaders);
 
         // when
@@ -62,7 +123,6 @@ public class SpecificationIT {
                 httpEntity,
                 ItineraryInfoResult.class
         );
-
 
         // then
         Assert.assertNotNull(responseEntity);
@@ -77,6 +137,11 @@ public class SpecificationIT {
         ItineraryInfoResult expected = objectMapper.readValue(expectedAsString, ItineraryInfoResult.class);
 
         Assert.assertEquals(expected, result);
+
+        Assert.assertEquals(
+                1,
+                hazelcastInstance.getMap(HazelcastConfiguration.ITINERARIES_LOOKUPS).size()
+        );
     }
 
     @Test
@@ -85,8 +150,13 @@ public class SpecificationIT {
         initWiremockResponses();
 
         ItinerarySearchInfo itinerarySearchInfo = new ItinerarySearchInfo("Tarragona", "Spain");
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json");
+
+        String[] securityResult = SecuritySupport.getBasicAuthHeader(username, password);
+        httpHeaders.add(securityResult[0], securityResult[1]);
+
         HttpEntity<ItinerarySearchInfo> httpEntity = new HttpEntity<>(itinerarySearchInfo, httpHeaders);
 
         // when
@@ -109,6 +179,12 @@ public class SpecificationIT {
         ItineraryInfoResult expected = objectMapper.readValue(expectedAsString, ItineraryInfoResult.class);
 
         Assert.assertEquals(expected, result);
+
+        Assert.assertEquals(
+                1,
+                hazelcastInstance.getMap(HazelcastConfiguration.ITINERARIES_LOOKUPS).size()
+        );
+
     }
 
     @Test
@@ -117,8 +193,13 @@ public class SpecificationIT {
         initWiremockResponses();
 
         ItinerarySearchInfo itinerarySearchInfo = new ItinerarySearchInfo("Tarragona", "Spain");
+
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json");
+
+        String[] securityResult = SecuritySupport.getBasicAuthHeader(username, password);
+        httpHeaders.add(securityResult[0], securityResult[1]);
+
         HttpEntity<ItinerarySearchInfo> httpEntity = new HttpEntity<>(itinerarySearchInfo, httpHeaders);
 
         // when
@@ -142,13 +223,22 @@ public class SpecificationIT {
         ItineraryInfoResult expected = objectMapper.readValue(expectedAsString, ItineraryInfoResult.class);
 
         Assert.assertEquals(expected, result);
+
+        Assert.assertEquals(
+                1,
+                hazelcastInstance.getMap(HazelcastConfiguration.ITINERARIES_LOOKUPS).size()
+        );
     }
 
+
     private void initWiremockResponses() {
+
+        String[] securityResult = SecuritySupport.getBasicAuthHeader(routesServiceUsername, routesServicePassword);
 
         // 1
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Tarragona\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -160,6 +250,7 @@ public class SpecificationIT {
         // 2
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Jaen\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -171,6 +262,7 @@ public class SpecificationIT {
         // 3
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Merida\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -182,6 +274,7 @@ public class SpecificationIT {
         // 4
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"La Coruna\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -194,6 +287,7 @@ public class SpecificationIT {
         // 5
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Arrecife\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -205,6 +299,7 @@ public class SpecificationIT {
         // 6
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Vitoria\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -216,6 +311,7 @@ public class SpecificationIT {
         // 7
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Jaen\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -227,6 +323,7 @@ public class SpecificationIT {
         // 8
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Algeciras\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -238,6 +335,7 @@ public class SpecificationIT {
         // 9
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Ourense\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -249,6 +347,7 @@ public class SpecificationIT {
         // 10
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Las Palmas\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -260,6 +359,7 @@ public class SpecificationIT {
         // 11
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Santander\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -271,6 +371,7 @@ public class SpecificationIT {
         // 12
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Jaen\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -282,6 +383,7 @@ public class SpecificationIT {
         // 13
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Marbella\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -293,6 +395,7 @@ public class SpecificationIT {
         // 14
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Bilbao\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -304,6 +407,7 @@ public class SpecificationIT {
         // 15
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Las Palmas\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -315,6 +419,7 @@ public class SpecificationIT {
         // 16
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Logrono\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -326,6 +431,7 @@ public class SpecificationIT {
         // 17
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Jaen\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -337,6 +443,7 @@ public class SpecificationIT {
         // 18
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Almeria\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -348,6 +455,7 @@ public class SpecificationIT {
         // 19
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Santa Cruz de Tenerife\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -359,6 +467,7 @@ public class SpecificationIT {
         // 20
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Las Palmas\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -370,6 +479,7 @@ public class SpecificationIT {
         // 21
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Barcelona\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -381,6 +491,7 @@ public class SpecificationIT {
         // 22
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Jaen\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -392,6 +503,7 @@ public class SpecificationIT {
         // 23
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Cordoba\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -403,6 +515,7 @@ public class SpecificationIT {
         // 24
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Seville\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -414,6 +527,7 @@ public class SpecificationIT {
         // 25
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Las Palmas\",\n" +
                         "\t\"country\":\"Spain\"\n" +
@@ -425,6 +539,7 @@ public class SpecificationIT {
         // 26
         stubFor(post(urlEqualTo("/api/route-info/search"))
                 .withHeader("Content-Type", equalTo("application/json"))
+                .withHeader(securityResult[0], equalTo(securityResult[1]))
                 .withRequestBody(new EqualToJsonPattern("{\n" +
                         "\t\"name\":\"Mataro\",\n" +
                         "\t\"country\":\"Spain\"\n" +

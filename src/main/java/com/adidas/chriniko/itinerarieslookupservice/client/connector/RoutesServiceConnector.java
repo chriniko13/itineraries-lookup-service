@@ -1,7 +1,7 @@
 package com.adidas.chriniko.itinerarieslookupservice.client.connector;
 
-import com.adidas.chriniko.itinerarieslookupservice.domain.CityInfo;
 import com.adidas.chriniko.itinerarieslookupservice.client.dto.RouteInfoResult;
+import com.adidas.chriniko.itinerarieslookupservice.domain.CityInfo;
 import com.adidas.chriniko.itinerarieslookupservice.error.ProcessingException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Log4j2
 
 @Component
@@ -26,14 +28,23 @@ public class RoutesServiceConnector {
     @Value("${routes-service.search-url}")
     private String searchUrl;
 
+    @Value("${routes-service.security.username}")
+    private String username;
+
+    @Value("${routes-service.security.password}")
+    private String password;
+
     private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
+    private final BasicAuthProvider basicAuthProvider;
 
     @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    public RoutesServiceConnector(RestTemplate restTemplate) {
+    public RoutesServiceConnector(RestTemplate restTemplate,
+                                  ObjectMapper objectMapper,
+                                  BasicAuthProvider basicAuthProvider) {
         this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+        this.basicAuthProvider = basicAuthProvider;
     }
 
     @Retryable(
@@ -46,6 +57,9 @@ public class RoutesServiceConnector {
         CityInfo cityInfo = new CityInfo(city, country);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Type", "application/json");
+
+        List<String> basicAuthHeaderInfo = basicAuthProvider.getBasicAuthHeader(username, password);
+        httpHeaders.add(basicAuthHeaderInfo.get(0), basicAuthHeaderInfo.get(1));
 
         HttpEntity<CityInfo> httpEntity = new HttpEntity<>(cityInfo, httpHeaders);
 
