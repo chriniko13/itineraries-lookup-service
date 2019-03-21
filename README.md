@@ -146,7 +146,16 @@
     ....
     
     ```
-    
+
+
+#### Authentication Needed for HTTP operations
+* Header, Key: Authorization --- Value: Basic YWRtaW46MTIzNA== (How value is constructed --> Base64.encode(username:password))
+
+* Current security settings:
+```
+security.username=admin
+security.password=1234
+```    
 
 
 #### Example Request - Response
